@@ -1,0 +1,5 @@
+postgresql://postgres.rwjgkgkwkaxlivtrqvck:SkylineCyber%40123@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres => FAIL: (ENOTFOUND) tenant/user postgres.rwjgkgkwkaxlivtrqvck not found
+postgresql://skyline.rwjgkgkwkaxlivtrqvck:SkylineCyber%40123@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres => FAIL: (ENOTFOUND) tenant/user skyline.rwjgkgkwkaxlivtrqvck not found
+postgresql://postgres:SkylineCyber%40123@db.rwjgkgkwkaxlivtrqvck.supabase.co:5432/postgres => FAIL: getaddrinfo ENOTFOUND db.rwjgkgkwkaxlivtrqvck.supabase.co
+postgresql://postgres:SkylineCyber%40123@aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres => FAIL: (ENOIDENTIFIER) no tenant identifier provided (external_id or sni_hostname required)
+postgresql://postgres.rwjgkgkwkaxlivtrqvck:SkylineCyber%40123@aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres => FAIL: (ENOTFOUND) tenant/user postgres.rwjgkgkwkaxlivtrqvck not found

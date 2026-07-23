@@ -7,7 +7,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#00d4ff',
+  themeColor: '#030712',
+  viewportFit: 'cover',
 }
 
 const geist = Geist({ subsets: ["latin"] });
@@ -50,15 +51,24 @@ export const metadata: Metadata = {
   },
 }
 
+import { SiteHeader } from '@/components/layout/site-header'
+import { SiteFooter } from '@/components/layout/site-footer'
+import { CustomCursor } from '@/components/ui/custom-cursor'
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geist.className} font-sans antialiased bg-[#020813] text-slate-200`}>
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${geist.className} font-sans antialiased bg-brand-dark text-slate-200 flex flex-col min-h-screen relative`} suppressHydrationWarning>
+        <CustomCursor />
+        <SiteHeader />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <SiteFooter />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

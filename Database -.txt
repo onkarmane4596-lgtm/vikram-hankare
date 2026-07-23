@@ -1,0 +1,7 @@
+Database -
+user - skyline
+pass - SkylineCyber@123
+
+admin panel 
+admin
+admin@123
