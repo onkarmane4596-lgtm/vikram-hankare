@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Geist', 'Geist Fallback', sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Custom Enterprise Colors (Matched to Electric Blue/Silver scheme) */
   --color-brand-blue: #0055FF;

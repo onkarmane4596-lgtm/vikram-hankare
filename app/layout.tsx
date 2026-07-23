@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { SiteHeader } from '@/components/layout/site-header'
+import { SiteFooter } from '@/components/layout/site-footer'
+import { CustomCursor } from '@/components/ui/custom-cursor'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -10,9 +12,6 @@ export const viewport: Viewport = {
   themeColor: '#030712',
   viewportFit: 'cover',
 }
-
-const geist = Geist({ subsets: ["latin"] });
-const geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'SKYLINE Centre of Excellence in Cyber Security and Forensics',
@@ -51,10 +50,6 @@ export const metadata: Metadata = {
   },
 }
 
-import { SiteHeader } from '@/components/layout/site-header'
-import { SiteFooter } from '@/components/layout/site-footer'
-import { CustomCursor } from '@/components/ui/custom-cursor'
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${geist.className} font-sans antialiased bg-brand-dark text-slate-200 flex flex-col min-h-screen relative`} suppressHydrationWarning>
+      <body className="font-sans antialiased bg-brand-dark text-slate-200 flex flex-col min-h-screen relative" suppressHydrationWarning>
         <CustomCursor />
         <SiteHeader />
         <main className="flex-grow">
