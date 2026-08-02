@@ -23,7 +23,7 @@ export default function PoliciesPage() {
         { name: "Intellectual Property Policy", desc: "Guidelines for ownership and use of research and innovation outputs." },
         { name: "Information Security Policy", desc: "Protection of institutional digital assets and information systems." },
         { name: "Refund & Cancellation Policy", desc: "Transparent procedures regarding admissions and fee refunds." },
-        { name: "Scholarship Policy", desc: "Eligible students may avail scholarship benefits as per selection criteria." },
+        { name: "Scholarship Policy", desc: "Eligible students may avail scholarship benefits as per the institute's approved scholarship policy and selection criteria." },
     ];
 
     const consultancyPolicies = [
@@ -50,7 +50,16 @@ export default function PoliciesPage() {
     return (
         <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-[#00d4ff]/30 selection:text-white pt-32 pb-32 overflow-hidden relative">
 
-            {/* BACKGROUND SCENE */}
+            {/* BACKGROUND SCENE & HERO BG */}
+            <div className="absolute top-0 left-0 right-0 h-[700px] z-0 overflow-hidden pointer-events-none">
+                <img
+                    src="/hero/hero1.png"
+                    alt="Cybersecurity Hero Backdrop"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity object-center"
+                />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(2,6,23,0.2)_0%,_#020617_90%)]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617]" />
+            </div>
             <div className="fixed top-[-20%] left-1/2 -translate-x-1/2 w-[100vw] h-[80vh] bg-[#0055FF]/5 rounded-full blur-[200px] pointer-events-none" />
             <div className="fixed bottom-[0%] right-[-10%] w-[60vw] h-[60vh] bg-[#00d4ff]/5 rounded-full blur-[250px] pointer-events-none" />
 
@@ -62,7 +71,7 @@ export default function PoliciesPage() {
                         <Shield className="w-4 h-4 text-[#00d4ff]" /> Legal & Compliance
                     </motion.div>
                     <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-                        Institutional <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] to-[#00ff88]">Policies</span>
+                        Institutional <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] via-[#38BDF8] to-white">Policies</span>
                     </motion.h1>
                     <motion.p variants={fadeUp} className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
                         Commitment to transparency, ethical operations, and strict adherence to institutional and consulting standards.
@@ -70,7 +79,7 @@ export default function PoliciesPage() {
                 </motion.div>
 
                 {/* 1. ACADEMIC & CAMPUS POLICIES */}
-                <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="mb-24">
+                <motion.section id="academic-policies" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="mb-24 scroll-mt-28">
                     <div className="flex items-center gap-4 mb-10 border-b border-white/10 pb-6">
                         <Book className="w-8 h-8 text-[#00d4ff]" />
                         <h2 className="text-3xl font-bold text-white">Academic & Campus Policies</h2>
@@ -87,16 +96,16 @@ export default function PoliciesPage() {
                 </motion.section>
 
                 {/* 2. CONSULTANCY OPERATING GUIDELINES */}
-                <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}>
+                <motion.section id="consultancy-policies" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="scroll-mt-28">
                     <div className="flex items-center gap-4 mb-10 border-b border-white/10 pb-6">
-                        <ScrollText className="w-8 h-8 text-[#00ff88]" />
+                        <ScrollText className="w-8 h-8 text-[#00d4ff]" />
                         <h2 className="text-3xl font-bold text-white">Skyline Consultancy Policies</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6 bg-white/[0.015] p-8 md:p-12 rounded-3xl border border-white/5">
                         {consultancyPolicies.map((cp, j) => (
                             <motion.div variants={fadeUp} key={j} className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/[0.02] transition-colors border border-transparent hover:border-white/5">
-                                <CheckCircle2 className="w-5 h-5 text-[#00ff88] shrink-0 mt-1" />
+                                <CheckCircle2 className="w-5 h-5 text-[#00d4ff] shrink-0 mt-1" />
                                 <div>
                                     <h4 className="text-white font-bold text-md mb-2">{cp.title}</h4>
                                     <p className="text-slate-400 text-sm leading-relaxed">{cp.desc}</p>

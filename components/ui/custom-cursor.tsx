@@ -3,210 +3,216 @@
 import { useEffect, useRef, useState } from "react";
 
 export function CustomCursor() {
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const bracketsRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
-    const [isMobile, setIsMobile] = useState(true);
+  const pointerRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
 
-    useEffect(() => {
-        // Disable on mobile/touch interfaces
-        if (window.matchMedia("(pointer: coarse)").matches) {
-            setIsMobile(true);
-            return;
-        } else {
-            setIsMobile(false);
+  useEffect(() => {
+    // Disable on touch / mobile devices
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsMobile(true);
+      return;
+    } else {
+      setIsMobile(false);
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+
+    let frameX = mouseX;
+    let frameY = mouseY;
+    let frameW = 36;
+    let frameH = 36;
+    let frameRadius = 10;
+    let isHovering = false;
+    let activeElem: HTMLElement | null = null;
+    let isClicking = false;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      const interactive = target.closest<HTMLElement>(
+        "a, button, [role='button'], input, select, textarea, label, [onclick], .cursor-pointer, card, header, .group"
+      );
+
+      // Only target actionable or styled interactive items (buttons, links, cards, inputs)
+      if (
+        interactive &&
+        (interactive.tagName === "BUTTON" ||
+          interactive.tagName === "A" ||
+          interactive.tagName === "INPUT" ||
+          interactive.tagName === "TEXTAREA" ||
+          interactive.getAttribute("role") === "button" ||
+          interactive.classList.contains("cursor-pointer") ||
+          interactive.onclick !== null)
+      ) {
+        isHovering = true;
+        activeElem = interactive;
+      } else {
+        isHovering = false;
+        activeElem = null;
+      }
+    };
+
+    const onMouseDown = () => (isClicking = true);
+    const onMouseUp = () => (isClicking = false);
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
+
+    let rafId: number;
+
+    const loop = () => {
+      // 1. Direct follow for precision Firewall Shield pointer
+      const pointerEase = 0.85;
+      cursorX += (mouseX - cursorX) * pointerEase;
+      cursorY += (mouseY - cursorY) * pointerEase;
+
+      if (pointerRef.current) {
+        pointerRef.current.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      }
+
+      // 2. Automatic Bounding Box Size Capture & Shape Morphing
+      if (isHovering && activeElem && document.body.contains(activeElem)) {
+        const rect = activeElem.getBoundingClientRect();
+        const padding = 5;
+
+        const targetX = rect.left - padding;
+        const targetY = rect.top - padding;
+        const targetW = rect.width + padding * 2;
+        const targetH = rect.height + padding * 2;
+
+        const style = window.getComputedStyle(activeElem);
+        const computedRadius = parseInt(style.borderRadius) || 12;
+
+        const lerpSpeed = 0.3; // Fast & responsive snapping
+        frameX += (targetX - frameX) * lerpSpeed;
+        frameY += (targetY - frameY) * lerpSpeed;
+        frameW += (targetW - frameW) * lerpSpeed;
+        frameH += (targetH - frameH) * lerpSpeed;
+        frameRadius += (computedRadius - frameRadius) * lerpSpeed;
+
+        if (frameRef.current) {
+          frameRef.current.style.transform = `translate3d(${frameX}px, ${frameY}px, 0)`;
+          frameRef.current.style.width = `${frameW}px`;
+          frameRef.current.style.height = `${frameH}px`;
+          frameRef.current.style.borderRadius = `${frameRadius + 4}px`;
+          frameRef.current.style.opacity = isClicking ? "0.95" : "1";
+          frameRef.current.setAttribute("data-mode", "hover");
         }
+      } else {
+        // Standby mode: Floating Firewall Reticle centered at cursor
+        const targetW = isClicking ? 26 : 40;
+        const targetH = isClicking ? 26 : 40;
+        const targetX = mouseX - targetW / 2;
+        const targetY = mouseY - targetH / 2;
 
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let currentX = mouseX;
-        let currentY = mouseY;
-        let isHovering = false;
-        let isClicking = false;
+        const lerpSpeed = 0.3;
+        frameX += (targetX - frameX) * lerpSpeed;
+        frameY += (targetY - frameY) * lerpSpeed;
+        frameW += (targetW - frameW) * lerpSpeed;
+        frameH += (targetH - frameH) * lerpSpeed;
+        frameRadius += (10 - frameRadius) * lerpSpeed;
 
-        // -------------------------------------------------------------
-        // Object Pool for Binary Trails (Extremely optimized rendering)
-        // -------------------------------------------------------------
-        const poolSize = 20;
-        const trailContainer = document.createElement("div");
-        trailContainer.style.position = "fixed";
-        trailContainer.style.top = "0";
-        trailContainer.style.left = "0";
-        trailContainer.style.width = "100vw";
-        trailContainer.style.height = "100vh";
-        trailContainer.style.pointerEvents = "none";
-        trailContainer.style.zIndex = "99997";
-        document.body.appendChild(trailContainer);
-
-        const chars = ["0", "1", "0x", "AF", "F9", "/"];
-        const trailData: { x: number; y: number; active: boolean; life: number; div: HTMLDivElement }[] = [];
-
-        for (let i = 0; i < poolSize; i++) {
-            const div = document.createElement("div");
-            div.style.position = "absolute";
-            div.style.color = "rgba(0, 212, 255, 0.7)";
-            div.style.fontFamily = "'Courier New', monospace";
-            div.style.fontSize = "11px";
-            div.style.fontWeight = "bold";
-            div.style.opacity = "0";
-            div.style.pointerEvents = "none";
-            div.style.willChange = "transform, opacity";
-            trailContainer.appendChild(div);
-
-            trailData.push({ x: 0, y: 0, active: false, life: 0, div });
+        if (frameRef.current) {
+          frameRef.current.style.transform = `translate3d(${frameX}px, ${frameY}px, 0)`;
+          frameRef.current.style.width = `${frameW}px`;
+          frameRef.current.style.height = `${frameH}px`;
+          frameRef.current.style.borderRadius = `${frameRadius}px`;
+          frameRef.current.style.opacity = isClicking ? "0.6" : "0.75";
+          frameRef.current.setAttribute("data-mode", "idle");
         }
+      }
 
-        let lastSpawn = 0;
-        // Glitching cyber terms for hover states
-        const texts = ["_SCANNING", "DECRYPTING_...", "AUTH_REQ", "[FORENSIC_TR]", "SYSTEM_BPS", "EXTRACTING", "ANALYZING_"];
+      rafId = requestAnimationFrame(loop);
+    };
 
-        const onMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        };
+    rafId = requestAnimationFrame(loop);
 
-        const handleMouseOver = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (
-                window.getComputedStyle(target).cursor === "pointer" ||
-                target.tagName.toLowerCase() === "a" ||
-                target.tagName.toLowerCase() === "button" ||
-                target.closest("a") ||
-                target.closest("button")
-            ) {
-                isHovering = true;
-            } else {
-                isHovering = false;
-            }
-        };
-
-        const onMouseDown = () => (isClicking = true);
-        const onMouseUp = () => (isClicking = false);
-
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseover", handleMouseOver);
-        window.addEventListener("mousedown", onMouseDown);
-        window.addEventListener("mouseup", onMouseUp);
-
-        // RAf Loop for mathematically perfect 60fps smoothing
-        const loop = () => {
-            const ease = 0.25;
-            currentX += (mouseX - currentX) * ease;
-            currentY += (mouseY - currentY) * ease;
-
-            if (cursorRef.current) {
-                cursorRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-            }
-
-            if (bracketsRef.current && textRef.current) {
-                if (isHovering) {
-                    const hoverScale = isClicking ? 1.3 : 1.6;
-                    bracketsRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${hoverScale})`;
-                    bracketsRef.current.style.opacity = "1";
-
-                    // Randomly flash text like a hacking terminal
-                    if (Math.random() > 0.85) {
-                        textRef.current.innerText = texts[Math.floor(Math.random() * texts.length)];
-                    }
-                } else {
-                    const idleScale = isClicking ? 0.3 : 0.6;
-                    bracketsRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${idleScale})`;
-                    bracketsRef.current.style.opacity = isClicking ? "0.8" : "0.2";
-                    textRef.current.innerText = "";
-                }
-            }
-
-            // Physics logic for spawning binary trails on rapid movement
-            const velocity = Math.abs(mouseX - currentX) + Math.abs(mouseY - currentY);
-
-            if (velocity > 8 && Date.now() - lastSpawn > 25) {
-                lastSpawn = Date.now();
-                const unactive = trailData.find(t => !t.active); // Find an invisible node string
-                if (unactive) {
-                    unactive.active = true;
-                    unactive.life = 1;
-                    unactive.x = mouseX + (Math.random() * 20 - 10);
-                    unactive.y = mouseY + (Math.random() * 20 - 10);
-                    unactive.div.innerText = chars[Math.floor(Math.random() * chars.length)];
-                    unactive.div.style.transform = `translate3d(${unactive.x}px, ${unactive.y}px, 0)`;
-                    unactive.div.style.opacity = "1";
-                }
-            }
-
-            // Render binary trail floating physics
-            trailData.forEach(t => {
-                if (t.active) {
-                    t.life -= 0.04; // Fade out quickly
-                    t.y -= 1.5; // Float upwards towards top of screen
-                    t.div.style.transform = `translate3d(${t.x}px, ${t.y}px, 0)`;
-                    t.div.style.opacity = t.life.toString();
-
-                    if (t.life <= 0) t.active = false;
-                }
-            });
-
-            requestAnimationFrame(loop);
-        };
-
-        const rafId = requestAnimationFrame(loop);
-
-        // Mask native cursor everywhere
-        const style = document.createElement("style");
-        style.innerHTML = `
+    // Mask system cursor
+    const style = document.createElement("style");
+    style.id = "custom-cursor-style";
+    style.innerHTML = `
       @media (pointer: fine) {
-        * { cursor: none !important; }
+        *, *::before, *::after { cursor: none !important; }
       }
     `;
-        document.head.appendChild(style);
+    document.head.appendChild(style);
 
-        return () => {
-            window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("mouseover", handleMouseOver);
-            window.removeEventListener("mousedown", onMouseDown);
-            window.removeEventListener("mouseup", onMouseUp);
-            cancelAnimationFrame(rafId);
-            document.head.removeChild(style);
-            if (trailContainer.parentNode) {
-                trailContainer.parentNode.removeChild(trailContainer);
-            }
-        };
-    }, []);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
+      cancelAnimationFrame(rafId);
+      const existingStyle = document.getElementById("custom-cursor-style");
+      if (existingStyle) existingStyle.remove();
+    };
+  }, []);
 
-    if (isMobile) return null;
+  if (isMobile) return null;
 
-    return (
-        <>
-            {/* Precision Tracking Dot (Diamond shape) */}
-            <div
-                ref={cursorRef}
-                className="fixed top-0 left-0 w-2 h-2 pointer-events-none z-[99999] shadow-[0_0_15px_#00d4ff] -ml-[4px] -mt-[4px]"
-                style={{
-                    background: "linear-gradient(45deg, #00d4ff, #00ff88)",
-                    clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
-                }}
-            />
+  return (
+    <>
+      {/* 1. Precision Firewall Shield Pointer Icon */}
+      <div
+        ref={pointerRef}
+        className="fixed top-0 left-0 pointer-events-none z-[99999] -ml-3 -mt-3 flex items-center justify-center will-change-transform"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="w-6 h-6 text-[#38BDF8] drop-shadow-[0_0_10px_#38BDF8] filter transition-transform duration-150"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Outer Firewall Shield Contour */}
+          <path
+            d="M12 2L4 5V11C4 16.55 7.4 21.74 12 23C16.6 21.74 20 16.55 20 11V5L12 2Z"
+            fill="rgba(2, 6, 23, 0.85)"
+            stroke="#38BDF8"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+          {/* Inner Cyber Core Flame */}
+          <path
+            d="M12 6L7 9V12C7 15.5 9.1 18.8 12 19.8C14.9 18.8 17 15.5 17 12V9L12 6Z"
+            fill="url(#shieldGlow)"
+            stroke="#60A5FA"
+            strokeWidth="1"
+          />
+          {/* Center Target Pointer Node */}
+          <circle cx="12" cy="12" r="1.5" fill="#FFFFFF" />
+          <defs>
+            <linearGradient id="shieldGlow" x1="12" y1="6" x2="12" y2="19.8" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#0055FF" stopOpacity="0.9" />
+              <stop offset="1" stopColor="#38BDF8" stopOpacity="0.4" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
 
-            {/* Cyber/Forensic Target HUD Elements */}
-            <div
-                ref={bracketsRef}
-                className="fixed top-0 left-0 w-16 h-16 pointer-events-none z-[99998] flex items-center justify-center -ml-8 -mt-8 will-change-transform"
-            >
-                {/* Rotating Scanner Artifacts */}
-                <div className="absolute inset-0 border border-[#0055FF]/40 rotate-45 rounded-sm animate-[spin_10s_linear_infinite]" />
-                <div className="absolute inset-2 border border-[#00d4ff]/20 -rotate-12 rounded-full animate-[spin_8s_linear_infinite_reverse]" />
-
-                {/* Targeting HUD Corners */}
-                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.4)]" />
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.4)]" />
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.4)]" />
-                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.4)]" />
-
-                {/* Terminal Terminal Status Text (Only displays on interactive element hover) */}
-                <div
-                    ref={textRef}
-                    className="absolute -bottom-8 whitespace-nowrap text-[9px] font-mono font-black text-[#00ff88] tracking-[0.2em] shadow-[0_0_10px_#00ff88] pointer-events-none"
-                />
-            </div>
-        </>
-    );
+      {/* 2. Dynamic Automatic Size-Capturing HUD Frame */}
+      <div
+        ref={frameRef}
+        className="fixed top-0 left-0 pointer-events-none z-[99998] border border-[#38BDF8]/60 shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-colors duration-150 will-change-transform data-[mode=hover]:bg-[#38BDF8]/10 data-[mode=hover]:border-[#38BDF8] data-[mode=hover]:shadow-[0_0_25px_rgba(56,189,248,0.5)]"
+      >
+        {/* Corner HUD Framing Brackets */}
+        <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
+        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
+        <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
+        <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
+      </div>
+    </>
+  );
 }

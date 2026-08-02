@@ -14,46 +14,62 @@ export default async function AdminDashboardPage() {
     redirect("/admin/login");
   }
 
-  // Fetch pending follow-ups
-  const followupsResult = await db.query(`
-    SELECT id, full_name, next_followup_date, assigned_to 
-    FROM admission_enquiries 
-    WHERE next_followup_date IS NOT NULL 
-    AND status NOT IN ('Converted', 'Rejected')
-    ORDER BY next_followup_date ASC
-    LIMIT 5
-  `);
-  const followups = followupsResult.rows;
+  let followups: any[] = [];
+  let statusCounts: Record<string, number> = {};
+  let totalLeads = 0;
+  let newLeads = 0;
+  let contactedLeads = 0;
+  let convertedLeads = 0;
+  let conversionRate = 0;
+  let programData: { program: string; count: number }[] = [];
+  let trendData: { month: string; count: number }[] = [];
+  let dbError: string | null = null;
 
-  // Analytics: Status Breakdown
-  const statusResult = await db.query(`SELECT status, COUNT(*) as count FROM admission_enquiries GROUP BY status`);
-  const statusCounts = statusResult.rows.reduce((acc, row) => {
-    acc[row.status] = parseInt(row.count, 10);
-    return acc;
-  }, {} as Record<string, number>);
+  try {
+    // Fetch pending follow-ups
+    const followupsResult = await db.query(`
+      SELECT id, full_name, next_followup_date, assigned_to 
+      FROM admission_enquiries 
+      WHERE next_followup_date IS NOT NULL 
+      AND status NOT IN ('Converted', 'Rejected')
+      ORDER BY next_followup_date ASC
+      LIMIT 5
+    `);
+    followups = followupsResult.rows;
 
-  const totalLeads = (Object.values(statusCounts) as number[]).reduce((sum, count) => sum + count, 0);
-  const newLeads = statusCounts['New'] || 0;
-  const contactedLeads = statusCounts['Contacted'] || 0;
-  const convertedLeads = statusCounts['Converted'] || 0;
-  const conversionRate = totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0;
+    // Analytics: Status Breakdown
+    const statusResult = await db.query(`SELECT status, COUNT(*) as count FROM admission_enquiries GROUP BY status`);
+    statusCounts = statusResult.rows.reduce((acc, row) => {
+      acc[row.status] = parseInt(row.count, 10);
+      return acc;
+    }, {} as Record<string, number>);
 
-  // Analytics: Program Distribution
-  const programResult = await db.query(`SELECT program, COUNT(*) as count FROM admission_enquiries GROUP BY program ORDER BY count DESC`);
-  const programData = programResult.rows.map(r => ({
-    program: (r.program || 'Other').replace('Foundation: ', '').replace('Professional: ', '').replace('Global Cert: ', ''),
-    count: parseInt(r.count, 10)
-  }));
+    totalLeads = (Object.values(statusCounts) as number[]).reduce((sum, count) => sum + count, 0);
+    newLeads = statusCounts['New'] || 0;
+    contactedLeads = statusCounts['Contacted'] || 0;
+    convertedLeads = statusCounts['Converted'] || 0;
+    conversionRate = totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0;
 
-  // Analytics: Monthly Trends (Last 6 Months)
-  const trendResult = await db.query(`
-    SELECT to_char(date_trunc('month', created_at), 'Mon YY') as month, COUNT(*) as count 
-    FROM admission_enquiries 
-    WHERE created_at >= NOW() - INTERVAL '6 months' 
-    GROUP BY date_trunc('month', created_at) 
-    ORDER BY date_trunc('month', created_at) ASC
-  `);
-  const trendData = trendResult.rows.map(r => ({ month: r.month, count: parseInt(r.count, 10) }));
+    // Analytics: Program Distribution
+    const programResult = await db.query(`SELECT program, COUNT(*) as count FROM admission_enquiries GROUP BY program ORDER BY count DESC`);
+    programData = programResult.rows.map(r => ({
+      program: (r.program || 'Other').replace('Foundation: ', '').replace('Professional: ', '').replace('Global Cert: ', ''),
+      count: parseInt(r.count, 10)
+    }));
+
+    // Analytics: Monthly Trends (Last 6 Months)
+    const trendResult = await db.query(`
+      SELECT to_char(date_trunc('month', created_at), 'Mon YY') as month, COUNT(*) as count 
+      FROM admission_enquiries 
+      WHERE created_at >= NOW() - INTERVAL '6 months' 
+      GROUP BY date_trunc('month', created_at) 
+      ORDER BY date_trunc('month', created_at) ASC
+    `);
+    trendData = trendResult.rows.map(r => ({ month: r.month, count: parseInt(r.count, 10) }));
+  } catch (err: any) {
+    console.error("Database Query Error in Admin Dashboard:", err.message);
+    dbError = err.message || "Failed to connect to database";
+  }
 
   return (
     <div className="min-h-screen bg-[#0A1F44] font-sans text-slate-300 pb-12">
@@ -65,6 +81,26 @@ export default async function AdminDashboardPage() {
           <h1 className="text-3xl font-medium text-white">Dashboard Overview</h1>
           <p className="text-slate-400 mt-1">Analytics and key metrics for your admission enquiries.</p>
         </header>
+
+        {/* Database Connection Alert if Error */}
+        {dbError && (
+          <div className="mb-8 p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 backdrop-blur-md flex items-start gap-4 shadow-lg">
+            <Bell className="w-6 h-6 text-amber-400 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-bold text-amber-300 text-sm uppercase tracking-wider mb-1">Database Connection Warning</h3>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-2">
+                Unable to query PostgreSQL database. Error: <code className="bg-black/40 px-2 py-0.5 rounded text-amber-300 font-mono text-xs">{dbError}</code>
+              </p>
+              <div className="text-xs text-slate-400 space-y-1">
+                <p>💡 <strong>How to resolve:</strong></p>
+                <ul className="list-disc list-inside space-y-0.5 text-slate-300">
+                  <li>If using <strong>Supabase</strong>, log into your Supabase Dashboard and click <strong>"Restore / Unpause Project"</strong> (free tier projects pause after inactivity).</li>
+                  <li>Verify your <code className="text-amber-200">DATABASE_URL</code> in <code className="text-amber-200">.env</code> contains correct credentials.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

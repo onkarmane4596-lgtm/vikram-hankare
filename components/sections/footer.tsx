@@ -8,8 +8,23 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#0a1020] border-t border-[#1e3a52] px-4 py-16">
-      <div className="max-w-6xl mx-auto">
+    <footer className="bg-[#0a1020] border-t border-[#1e3a52] px-4 py-16 relative overflow-hidden">
+      {/* Background Video Layer (/design/footer.mp4) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover opacity-30 filter brightness-75 contrast-110 saturate-110"
+        >
+          <source src="/design/footer.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1020] via-[#0a1020]/70 to-[#0a1020]/90" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
@@ -19,9 +34,14 @@ export function Footer() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <div className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-[#00d4ff]" />
-              <span className="text-xl font-bold text-white">SKYLINE</span>
+            <div className="flex items-start gap-3.5">
+              <img src="/logo.png" alt="SKYLINE Shield Logo" className="h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
+              <div className="flex flex-col pt-0.5">
+                <img src="/name.png" alt="SKYLINE" className="h-6 w-auto object-contain object-left block" />
+                <span className="text-[9px] font-normal text-transparent bg-clip-text bg-gradient-to-r from-slate-300 via-slate-100 to-slate-400 tracking-[0.28em] uppercase mt-1 whitespace-nowrap block">
+                  Centre of Excellence
+                </span>
+              </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Empowering the next generation of cybersecurity professionals with world-class education.
@@ -111,8 +131,16 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Copyright */}
-          <p className="text-gray-400 text-sm">
-            &copy; {currentYear} SKYLINE Centre of Excellence. All rights reserved.
+          <p className="text-gray-400 text-sm font-normal">
+            &copy; {currentYear} SKYLINE Centre of Excellence. All rights reserved. • Powered by{" "}
+            <a
+              href="https://www.techsarthiservices.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-normal text-slate-300 hover:text-cyan-400 transition-colors"
+            >
+              TECHSARTHI
+            </a>
           </p>
 
           {/* Social Links */}

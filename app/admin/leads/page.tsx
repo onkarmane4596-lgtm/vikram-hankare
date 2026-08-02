@@ -15,13 +15,21 @@ export default async function AdminLeadsPage() {
     redirect("/admin/login");
   }
 
-  // Fetch all leads
-  const leadsResult = await db.query(`
-    SELECT id, full_name, email, phone, program, status, created_at
-    FROM admission_enquiries 
-    ORDER BY created_at DESC
-  `);
-  const leads = leadsResult.rows;
+  let leads: any[] = [];
+  let dbError: string | null = null;
+
+  try {
+    // Fetch all leads
+    const leadsResult = await db.query(`
+      SELECT id, full_name, email, phone, program, status, created_at
+      FROM admission_enquiries 
+      ORDER BY created_at DESC
+    `);
+    leads = leadsResult.rows;
+  } catch (err: any) {
+    console.error("Database Query Error in Admin Leads:", err.message);
+    dbError = err.message || "Failed to query database";
+  }
 
   return (
     <div className="min-h-screen bg-[#0A1F44] font-sans text-slate-300">
@@ -35,6 +43,12 @@ export default async function AdminLeadsPage() {
             <p className="text-slate-400 mt-1">View and manage all incoming admission enquiries.</p>
           </div>
         </header>
+
+        {dbError && (
+          <div className="mb-8 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm">
+            ⚠️ <strong>Database Connection Issue:</strong> {dbError}. Please ensure Supabase project is active or check <code className="text-amber-300">DATABASE_URL</code> in <code className="text-amber-300">.env</code>.
+          </div>
+        )}
 
         <div className="bg-[#0D2B60] border border-white/5 rounded-[2rem] shadow-xl overflow-hidden">
           <div className="overflow-x-auto">

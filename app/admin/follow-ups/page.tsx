@@ -15,14 +15,22 @@ export default async function AdminFollowupsPage() {
     redirect("/admin/login");
   }
 
-  const followupsResult = await db.query(`
-    SELECT id, full_name, program, status, assigned_to, next_followup_date, followup_notes 
-    FROM admission_enquiries 
-    WHERE next_followup_date IS NOT NULL 
-    AND status NOT IN ('Converted', 'Rejected')
-    ORDER BY next_followup_date ASC
-  `);
-  const followups = followupsResult.rows;
+  let followups: any[] = [];
+  let dbError: string | null = null;
+
+  try {
+    const followupsResult = await db.query(`
+      SELECT id, full_name, program, status, assigned_to, next_followup_date, followup_notes 
+      FROM admission_enquiries 
+      WHERE next_followup_date IS NOT NULL 
+      AND status NOT IN ('Converted', 'Rejected')
+      ORDER BY next_followup_date ASC
+    `);
+    followups = followupsResult.rows;
+  } catch (err: any) {
+    console.error("Database Query Error in Followups Page:", err.message);
+    dbError = err.message || "Failed to query database";
+  }
 
   return (
     <div className="min-h-screen bg-[#0A1F44] font-sans text-slate-300">
@@ -36,6 +44,12 @@ export default async function AdminFollowupsPage() {
             <p className="text-slate-400 mt-1">Track and manage all scheduled follow-ups.</p>
           </div>
         </header>
+
+        {dbError && (
+          <div className="mb-8 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm">
+            ⚠️ <strong>Database Connection Issue:</strong> {dbError}. Please ensure Supabase project is active or check <code className="text-amber-300">DATABASE_URL</code> in <code className="text-amber-300">.env</code>.
+          </div>
+        )}
 
         <div className="bg-[#0D2B60] border border-white/5 rounded-[2rem] shadow-xl overflow-hidden">
           <div className="overflow-x-auto">

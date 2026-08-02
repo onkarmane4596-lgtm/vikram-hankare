@@ -1,10 +1,15 @@
 export const CONTACT_INFO = {
-  phone: '+91 9876543210',
-  phoneLink: '+919876543210',
-  email: 'info@cybersecureacademy.com',
-  whatsapp: '+919876543210',
-  whatsappMessage: 'Hi, I&apos;m interested in your cybersecurity courses. Can you provide more information?',
-  address: 'Bangalore, India',
+  phone: '+91 9890424040',
+  phoneLink: '+919890424040',
+  email: 'info@skycyberforensics.in',
+  whatsapp: '919890424040',
+  whatsappMessage: "Hi, I'm interested in your cybersecurity courses and forensic consultancy services. Can you provide more information?",
+  address: 'Satara, Maharashtra, India (Under Chhatrapati Shahu Maharaj Sevabhavi Sanstha)',
+  social: {
+    instagram: 'https://www.instagram.com/skyline_cyberforensics',
+    facebook: 'https://www.facebook.com/profile.php?id=61590718920061',
+    linkedin: 'https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415',
+  }
 }
 
 export const COURSE_DOMAINS = [

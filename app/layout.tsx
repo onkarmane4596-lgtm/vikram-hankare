@@ -1,69 +1,43 @@
-import type { Metadata, Viewport } from 'next'
+import type { Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { SiteHeader } from '@/components/layout/site-header'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { CustomCursor } from '@/components/ui/custom-cursor'
+import { FloatingActionDock } from '@/components/layout/floating-action-dock'
+import { constructMetadata, getOrganizationSchema, getWebSiteSchema } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/json-ld'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#030712',
+  themeColor: '#020617',
   viewportFit: 'cover',
 }
 
-export const metadata: Metadata = {
-  title: 'SKYLINE Centre of Excellence in Cyber Security and Forensics',
-  description: 'Industry-focused cybersecurity training and digital forensics education, empowering students with real-world skills.',
-  generator: 'Next.js',
-  keywords: ['Cyber Security', 'Digital Forensics', 'Ethical Hacking', 'Risk & Compliance', 'Incident Response', 'Education', 'Skyline', 'SKYLINE Centre of Excellence', 'Satara', 'Maharashtra', 'Certification'],
-  authors: [{ name: 'SKYLINE Centre of Excellence in Cyber Security and Forensics' }],
-  creator: 'SKYLINE Centre of Excellence in Cyber Security and Forensics',
-  publisher: 'Chhatrapati Shahu Maharaj Sevabhavi Sanstha',
-  icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
-  },
-  openGraph: {
-    title: 'SKYLINE Centre of Excellence in Cyber Security and Forensics',
-    description: 'Where Security Meets Intelligence. Master Ethical Hacking, Digital Forensics, and Incident Response with expert-led training at SKYLINE Centre of Excellence.',
-    url: 'https://skycyberforensics.in',
-    siteName: 'SKYLINE Centre of Excellence',
-    images: [
-      {
-        url: '/logo.png',
-        width: 800,
-        height: 800,
-        alt: 'SKYLINE Logo',
-      },
-    ],
-    locale: 'en_IN',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'SKYLINE Centre of Excellence',
-    description: 'Where Security Meets Intelligence. Build your career in Cyber Security with SKYLINE.',
-    images: ['/logo.png'],
-  },
-}
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const orgSchema = getOrganizationSchema();
+  const websiteSchema = getWebSiteSchema();
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="font-sans antialiased bg-brand-dark text-slate-200 flex flex-col min-h-screen relative" suppressHydrationWarning>
+        <JsonLd data={orgSchema} />
+        <JsonLd data={websiteSchema} />
         <CustomCursor />
         <SiteHeader />
         <main className="flex-grow">
           {children}
         </main>
         <SiteFooter />
+        <FloatingActionDock />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
