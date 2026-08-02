@@ -387,7 +387,7 @@ function EcosystemInteractiveSection() {
             <Link
               key={idx}
               href={item.href}
-              className="inline-block text-lg sm:text-2xl lg:text-3xl font-bold tracking-normal transition-colors duration-300 select-none shrink-0 px-1.5 sm:px-2 bg-gradient-to-r from-slate-300 via-slate-100 to-slate-300 text-transparent bg-clip-text hover:bg-none hover:text-[#0055FF]"
+              className="inline-block text-lg sm:text-2xl lg:text-3xl font-bold tracking-normal transition-all duration-300 select-none shrink-0 px-1.5 sm:px-2 bg-gradient-to-r from-slate-300 via-slate-100 to-slate-300 text-transparent bg-clip-text hover:bg-none hover:text-[#0055FF] active:text-[#38BDF8] active:scale-95 touch-manipulation"
             >
               {item.name}
             </Link>
@@ -551,7 +551,8 @@ function CorePillarsSection() {
               <motion.div 
                 key={idx} 
                 variants={fadeUp}
-                className="group relative bg-slate-900/35 border border-slate-800/80 hover:border-[#38BDF8]/40 rounded-2xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:bg-slate-900/60 hover:shadow-[0_15px_30px_-10px_rgba(56,189,248,0.12)] overflow-hidden"
+                whileTap={{ scale: 0.98 }}
+                className="group relative bg-slate-900/35 border border-slate-800/80 hover:border-[#38BDF8]/40 active:border-[#38BDF8]/70 rounded-2xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 active:scale-[0.98] hover:bg-slate-900/60 active:bg-slate-900/70 hover:shadow-[0_15px_30px_-10px_rgba(56,189,248,0.12)] overflow-hidden touch-manipulation cursor-pointer"
               >
                 {/* Light Corner Glowing Accent Lines (Top-Right Corner) */}
                 <div className="absolute top-0 right-0 w-24 h-[1.5px] bg-gradient-to-l from-[#38BDF8] via-[#38BDF8]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -707,7 +708,6 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0055FF]"></span>
             </span>
-            <Shield className="w-3.5 h-3.5 text-[#0055FF] shrink-0" />
             <span className="text-slate-900 font-medium">
               SKYLINE — <span className="text-slate-600 font-normal">Training division of Chhatrapati Shahu Maharaj Sevabhavi Sanstha</span>
             </span>
@@ -958,7 +958,10 @@ export default function HomePage() {
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-2 pb-6 pt-2 scrollbar-none">
             
             {/* Start Card (00 INITIATE PROTOCOL) */}
-            <div className="snap-center shrink-0 w-[82vw] max-w-[320px] bg-gradient-to-br from-[#0B1026] via-[#08101F] to-[#02030A] border border-[#00A8FF]/40 rounded-3xl p-6 flex flex-col items-center justify-between text-center shadow-xl relative overflow-hidden">
+            <motion.div 
+              whileTap={{ scale: 0.98 }}
+              className="snap-center shrink-0 w-[82vw] max-w-[320px] bg-gradient-to-br from-[#0B1026] via-[#08101F] to-[#02030A] border border-[#00A8FF]/40 active:border-[#00A8FF] rounded-3xl p-6 flex flex-col items-center justify-between text-center shadow-xl relative overflow-hidden active:scale-98 transition-all duration-300 touch-manipulation cursor-pointer"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#00A8FF]/10 rounded-full blur-[40px] pointer-events-none" />
               <div>
                 <span className="text-[10px] font-extrabold text-[#00A8FF] uppercase tracking-widest px-3 py-1 rounded-full bg-slate-950 border border-[#00A8FF]/30 inline-block mb-4">
@@ -973,13 +976,14 @@ export default function HomePage() {
               <div className="mt-6 w-full py-2 rounded-xl bg-[#0055FF]/20 border border-[#00A8FF]/40 text-[#38BDF8] font-bold text-xs uppercase tracking-widest">
                 STEP 00 — START
               </div>
-            </div>
+            </motion.div>
 
             {/* Steps 1 through 7 Cards */}
             {roadmapSteps.map((step, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="snap-center shrink-0 w-[82vw] max-w-[320px] bg-gradient-to-br from-[#0B1026] via-[#08101F] to-[#02030A] border border-slate-800 hover:border-[#00A8FF]/50 rounded-3xl p-6 flex flex-col justify-between text-center shadow-xl relative overflow-hidden transition-all duration-300"
+                whileTap={{ scale: 0.98 }}
+                className="snap-center shrink-0 w-[82vw] max-w-[320px] bg-gradient-to-br from-[#0B1026] via-[#08101F] to-[#02030A] border border-slate-800 hover:border-[#00A8FF]/50 active:border-[#00A8FF] rounded-3xl p-6 flex flex-col justify-between text-center shadow-xl relative overflow-hidden active:scale-98 transition-all duration-300 touch-manipulation cursor-pointer"
               >
                 <div className="absolute -top-2 -right-1 text-white/[0.03] font-black text-7xl pointer-events-none">
                   {step.step}
@@ -1002,7 +1006,7 @@ export default function HomePage() {
                   <span className="text-[#00A8FF] font-bold">STAGE {step.step}</span>
                   <span className="text-slate-500">SWIPE NEXT →</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
 
           </div>
@@ -1033,9 +1037,10 @@ export default function HomePage() {
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.98 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: i * 0.15 }}
-                className="group relative p-8 sm:p-9 rounded-3xl border border-[#8D929B]/25 bg-[#0B1026]/95 backdrop-blur-md overflow-hidden hover:-translate-y-2.5 transition-all duration-500 hover:border-[#00A8FF]/70 shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_rgba(0,168,255,0.25)]"
+                className="group relative p-8 sm:p-9 rounded-3xl border border-[#8D929B]/25 bg-[#0B1026]/95 backdrop-blur-md overflow-hidden hover:-translate-y-2.5 active:scale-[0.98] transition-all duration-500 hover:border-[#00A8FF]/70 active:border-[#00A8FF] shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_rgba(0,168,255,0.25)] touch-manipulation cursor-pointer"
               >
                 {/* 1. Creative Design Asset Background Texture (/design/4.png) */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -1095,7 +1100,7 @@ export default function HomePage() {
                   <div className="mt-auto pt-2 flex flex-col sm:flex-row items-center gap-3">
                     <Link 
                       href={program.href} 
-                      className="flex-1 flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#08101F]/90 border border-[#8D929B]/30 text-white hover:bg-[#0055FF]/20 transition-all duration-300 group/btn hover:border-[#38BDF8]/60 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)]"
+                      className="flex-1 flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#08101F]/90 border border-[#8D929B]/30 text-white hover:bg-[#0055FF]/20 active:scale-95 transition-all duration-300 group/btn hover:border-[#38BDF8]/60 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] touch-manipulation"
                     >
                       <span className="font-semibold text-xs sm:text-sm tracking-wide">View Curriculum</span>
                       <div className="p-1.5 rounded-lg bg-[#00A8FF]/20 text-[#00A8FF] group-hover/btn:bg-[#00A8FF] group-hover/btn:text-white transition-all duration-300 group-hover/btn:translate-x-0.5">
@@ -1107,7 +1112,7 @@ export default function HomePage() {
                       href={`https://wa.me/919890424040?text=${encodeURIComponent(program.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 hover:border-emerald-400 text-emerald-300 hover:text-white text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md group/wa w-full sm:w-auto"
+                      className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 active:bg-emerald-800 border border-emerald-500/50 hover:border-emerald-400 text-emerald-300 hover:text-white text-xs sm:text-sm font-semibold active:scale-95 transition-all duration-300 shadow-md group/wa w-full sm:w-auto touch-manipulation"
                     >
                       <MessageSquare className="w-4 h-4 text-emerald-400 group-hover/wa:scale-110 transition-transform shrink-0" />
                       <span className="whitespace-nowrap">Ask a Question</span>

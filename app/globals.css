@@ -46,6 +46,7 @@ html {
 @layer base {
   * {
     @apply border-border outline-none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
