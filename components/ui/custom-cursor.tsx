@@ -44,6 +44,13 @@ export function CustomCursor() {
         "a, button, [role='button'], input, select, textarea, label, [onclick], .cursor-pointer, card, header, .group"
       );
 
+      // Check if element or parent opts out of cursor frame
+      if (interactive && interactive.closest(".no-cursor-frame")) {
+        isHovering = false;
+        activeElem = null;
+        return;
+      }
+
       // Only target actionable or styled interactive items (buttons, links, cards, inputs)
       if (
         interactive &&

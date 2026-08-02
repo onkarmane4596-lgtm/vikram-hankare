@@ -461,6 +461,116 @@ const PILLARS_DATA = [
   }
 ];
 
+function ThreeDPillarCard({ item }: { item: { num: string; title: string; desc: string; tag: string; icon: any } }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const ItemIcon = item.icon;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rX = ((y - centerY) / centerY) * -10;
+    const rY = ((x - centerX) / centerX) * 10;
+
+    setRotateX(rX);
+    setRotateY(rY);
+    setGlarePos({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotateX(0);
+    setRotateY(0);
+  };
+
+  return (
+    <motion.div variants={fadeUp} className="no-cursor-frame [perspective:1000px]">
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: isHovered
+            ? `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px) scale(1.02)`
+            : "rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)",
+          transition: isHovered
+            ? "transform 0.1s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out"
+            : "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease-out, border-color 0.5s ease-out",
+          transformStyle: "preserve-3d",
+        }}
+        className={`group relative bg-gradient-to-b from-slate-900/90 via-slate-900/60 to-slate-950/90 border rounded-2xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 overflow-hidden touch-manipulation cursor-pointer ${
+          isHovered
+            ? "border-slate-700/80 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.85),0_0_20px_1px_rgba(255,255,255,0.06)] bg-slate-900/80"
+            : "border-slate-800/80 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)]"
+        }`}
+      >
+        {/* Subtle Specular Off-White Interactive Glare Light */}
+        {isHovered && (
+          <div
+            className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-10"
+            style={{
+              background: `radial-gradient(circle 280px at ${glarePos.x}% ${glarePos.y}%, rgba(255, 255, 255, 0.05), transparent 70%)`,
+            }}
+          />
+        )}
+
+        {/* Subtle Off-White Top Rim Lighting Hairline */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+        {/* 3D Deep Dark Ambient Bottom Shadow */}
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-4/5 h-20 bg-black/60 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-0" />
+
+        <div className="relative z-20">
+          {/* Top HUD Metrics Row */}
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <span className="font-mono text-[11px] font-bold text-slate-400 group-hover:text-slate-200 tracking-widest px-2.5 py-1 rounded-md bg-slate-950/90 border border-slate-800 group-hover:border-slate-700 shadow-inner transition-colors duration-300">
+              // {item.num}
+            </span>
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-400 group-hover:text-white group-hover:bg-slate-800/80 group-hover:border-slate-700 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.6)] transition-all duration-300 transform group-hover:translate-z-6">
+              <ItemIcon className="w-5 h-5" />
+            </div>
+          </div>
+
+          {/* Title & Description */}
+          <h3 className="text-lg font-bold text-white group-hover:text-slate-100 transition-colors duration-300 mb-2.5 leading-snug">
+            {item.title}
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-400 font-normal leading-relaxed mb-6">
+            {item.desc}
+          </p>
+        </div>
+
+        {/* Bottom Tagline Hairline */}
+        <div className="relative z-20 pt-4 border-t border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span className="group-hover:text-slate-200 transition-colors flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-slate-200 opacity-70 group-hover:opacity-100 transition-all" />
+            {item.tag}
+          </span>
+          <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function CorePillarsSection() {
   return (
     <section className="py-24 sm:py-32 border-y border-slate-800/60 bg-[#020617] relative z-20 overflow-hidden">
@@ -494,7 +604,7 @@ function CorePillarsSection() {
           </p>
         </motion.div>
 
-        {/* Minimal, Sleek & Highly Interactive Floating Glass Cards */}
+        {/* Minimal, Sleek & Highly Interactive Floating 3D Cards */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -545,58 +655,9 @@ function CorePillarsSection() {
               tag: "Direct Campus Hiring",
               icon: Award 
             }
-          ].map((item, idx) => {
-            const ItemIcon = item.icon;
-            return (
-              <motion.div 
-                key={idx} 
-                variants={fadeUp}
-                whileTap={{ scale: 0.98 }}
-                className="group relative bg-slate-900/35 border border-slate-800/80 hover:border-[#38BDF8]/40 active:border-[#38BDF8]/70 rounded-2xl p-7 sm:p-8 flex flex-col justify-between backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 active:scale-[0.98] hover:bg-slate-900/60 active:bg-slate-900/70 hover:shadow-[0_15px_30px_-10px_rgba(56,189,248,0.12)] overflow-hidden touch-manipulation cursor-pointer"
-              >
-                {/* Light Corner Glowing Accent Lines (Top-Right Corner) */}
-                <div className="absolute top-0 right-0 w-24 h-[1.5px] bg-gradient-to-l from-[#38BDF8] via-[#38BDF8]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                <div className="absolute top-0 right-0 h-24 w-[1.5px] bg-gradient-to-b from-[#38BDF8] via-[#38BDF8]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Subtle Soft Radial Corner Glow */}
-                <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#38BDF8]/15 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                {/* Tech Corner Crosshair */}
-                <span className="absolute top-3.5 right-3.5 text-slate-700 group-hover:text-[#38BDF8] font-mono text-[10px] transition-colors duration-300 pointer-events-none">
-                  +
-                </span>
-
-                <div>
-                  {/* Top HUD Metrics Row */}
-                  <div className="flex items-center justify-between gap-4 mb-6">
-                    <span className="font-mono text-[11px] font-bold text-[#38BDF8] tracking-widest px-2.5 py-1 rounded-md bg-slate-900/80 border border-slate-800 group-hover:border-[#38BDF8]/30 transition-colors">
-                      // {item.num}
-                    </span>
-                    <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-400 group-hover:text-[#38BDF8] group-hover:bg-[#0055FF]/15 group-hover:border-[#38BDF8]/30 transition-all duration-500">
-                      <ItemIcon className="w-5 h-5" />
-                    </div>
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors duration-300 mb-2.5 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 font-normal leading-relaxed mb-6">
-                    {item.desc}
-                  </p>
-                </div>
-
-                {/* Bottom Tagline Hairline */}
-                <div className="pt-4 border-t border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span className="group-hover:text-slate-300 transition-colors flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-[#38BDF8] opacity-70 group-hover:opacity-100 transition-all" />
-                    {item.tag}
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-[#38BDF8] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                </div>
-              </motion.div>
-            );
-          })}
+          ].map((item, idx) => (
+            <ThreeDPillarCard key={idx} item={item} />
+          ))}
         </motion.div>
 
         {/* Bottom Minimal Trust Bar */}
