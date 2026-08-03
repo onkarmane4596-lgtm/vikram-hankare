@@ -15,7 +15,7 @@ import {
   Briefcase,
   Award,
   BookOpen,
-  Sparkles,
+  Zap,
   Terminal,
   ShieldCheck
 } from "lucide-react";
@@ -95,7 +95,7 @@ export default function AICybersecurityWorkshopPage() {
 
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl">
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00d4ff]/10 border border-[#00d4ff]/25 text-xs font-bold text-[#00d4ff] uppercase tracking-widest mb-6 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-[#00d4ff]" /> Cutting-Edge Frontier Tech
+              <Zap className="w-3.5 h-3.5 text-[#00d4ff]" /> Cutting-Edge Frontier Tech
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.15]">

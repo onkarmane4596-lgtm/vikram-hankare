@@ -22,12 +22,12 @@ const staggerContainer: Variants = {
 
 const ELIGIBILITY_GROUPS = [
   {
-    title: "Students (Graduation / Post Graduation)",
-    subtitle: "B.Sc, M.Sc, BCA, MCA, B.Com & Science Graduates",
+    title: "Students (School / Graduation / Post Graduation / Any Stream)",
+    subtitle: "School, College, B.Sc, BCA, MCA, B.Com, Arts, Science & Tech (Any Stream)",
     icon: GraduationCap,
-    desc: "Ideal for university students seeking specialized industry credentials in digital forensics, cyber investigation, and incident response.",
+    desc: "Open for school & college students from any academic stream seeking foundational and specialized industry credentials in cybersecurity and forensics.",
     color: "from-sky-500/20 to-blue-600/10",
-    badge: "Academic Track"
+    badge: "Students (All Streams)"
   },
   {
     title: "Engineering & Technology Students",
@@ -536,6 +536,9 @@ function AdmissionsFormContent() {
                       onChange={(e) => setFormData({ ...formData, program: e.target.value })}
                       className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8] transition-colors"
                     >
+                      <option value="Digital Forensics Internship" className="bg-slate-900">Digital Forensics Internship (3 to 6 Months)</option>
+                      <option value="SOC Analyst Traineeship" className="bg-slate-900">SOC Analyst Traineeship (6 Months)</option>
+                      <option value="Ethical Hacking & VAPT Internship" className="bg-slate-900">Ethical Hacking & VAPT Internship (3 to 6 Months)</option>
                       <option value="CEH v13 - Certified Ethical Hacker" className="bg-slate-900">Certified Ethical Hacker (CEHv13)</option>
                       <option value="CHFI - Computer Hacking Forensic Investigator" className="bg-slate-900">Computer Hacking Forensic Investigator (CHFI)</option>
                       <option value="CND - Certified Network Defender" className="bg-slate-900">Certified Network Defender (CND)</option>

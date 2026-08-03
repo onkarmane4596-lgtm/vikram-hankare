@@ -523,7 +523,7 @@ export default function CNDCertificationPage() {
                       <option value="Network Security Engineer">Network Security Engineer</option>
                       <option value="Network / Systems Admin">Network / Systems Administrator</option>
                       <option value="SOC Analyst / Blue Team">SOC Analyst / Blue Team Defender</option>
-                      <option value="Student / Graduate">B.Sc. IT / Computer Science Graduate</option>
+                      <option value="Student / Graduate (Any Stream)">Students / Graduates (School / College / Any Stream)</option>
                       <option value="Corporate Infrastructure Team">Corporate IT Infrastructure Team</option>
                     </select>
                   </div>

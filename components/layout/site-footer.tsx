@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Shield, Mail, Phone, Globe, MapPin, ChevronRight, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Shield, Mail, Phone, Globe, MapPin, ChevronRight, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
 
 export function SiteFooter() {
   const pathname = usePathname();
@@ -43,15 +43,42 @@ export function SiteFooter() {
             <p className="text-sm leading-relaxed mb-6">
               Advanced Cyber Security Training, Digital Forensics, Incident Response, and Industry Certification Programs. Guardians of the Digital Skyline.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="https://www.facebook.com/profile.php?id=61590718920061" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-cyan-900 hover:text-cyan-400 transition-colors">
-                <Facebook className="w-4 h-4" />
+            <div className="flex items-center gap-3.5">
+              <a
+                href="https://www.facebook.com/profile.php?id=61590718920061"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full bg-slate-900/90 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-[0_0_16px_rgba(24,119,242,0.5)] transition-all duration-300 group"
+              >
+                <Facebook className="w-4 h-4 transition-transform group-hover:scale-110" />
               </a>
-              <a href="https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-cyan-900 hover:text-cyan-400 transition-colors">
-                <Linkedin className="w-4 h-4" />
+              <a
+                href="https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full bg-slate-900/90 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] hover:shadow-[0_0_16px_rgba(10,102,194,0.5)] transition-all duration-300 group"
+              >
+                <Linkedin className="w-4 h-4 transition-transform group-hover:scale-110" />
               </a>
-              <a href="https://www.instagram.com/skyline_cyberforensics" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-cyan-900 hover:text-cyan-400 transition-colors">
-                <Instagram className="w-4 h-4" />
+              <a
+                href="https://www.instagram.com/skyline_cyberforensics"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full bg-slate-900/90 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:shadow-[0_0_16px_rgba(225,48,108,0.5)] transition-all duration-300 group"
+              >
+                <Instagram className="w-4 h-4 transition-transform group-hover:scale-110" />
+              </a>
+              <a
+                href="https://youtube.com/@skylinecyberforensics?si=rI7ZCJAG0HxajVrA"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-9 h-9 rounded-full bg-slate-900/90 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000] hover:shadow-[0_0_16px_rgba(255,0,0,0.5)] transition-all duration-300 group"
+              >
+                <Youtube className="w-4 h-4 transition-transform group-hover:scale-110" />
               </a>
             </div>
           </div>
@@ -94,14 +121,11 @@ export function SiteFooter() {
                 { name: "Digital Forensics & IR", href: "/services/digital-forensics" },
                 { name: "IT Audits & Compliance", href: "/services/it-audits-compliance" },
                 { name: "Hands-on Trainings", href: "/trainings" },
-                { name: "Learning Resources", href: "#" },
+                { name: "Learning Resources", href: "/resources" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    onClick={(e) => {
-                      if (link.href === "#") e.preventDefault();
-                    }}
                     className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group"
                   >
                     <ChevronRight className="w-3 h-3 text-slate-600 group-hover:text-cyan-400 transition-colors" />
@@ -122,8 +146,9 @@ export function SiteFooter() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <span className="text-sm leading-relaxed">
-                  Satara, Maharashtra<br />
-                  Under Chhatrapati Shahu Maharaj Sevabhavi Sanstha
+                  I Floor, Rajasi Business Centre, opp BSNL office,<br />
+                  Near Powai Naka Satara - 415001<br />
+                  <span className="text-[#38BDF8]/80 text-xs">Under Chhatrapati Shahu Maharaj Sevabhavi Sanstha</span>
                 </span>
               </li>
               <li className="flex items-center gap-3">

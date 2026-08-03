@@ -523,7 +523,7 @@ export default function CSACertificationPage() {
                       <option value="SOC Analyst Aspirant">SOC Analyst Aspirant</option>
                       <option value="IT & Support Professional">IT Support / Systems Admin</option>
                       <option value="Network Engineer">Network / Security Engineer</option>
-                      <option value="Student / Graduate">B.Sc. IT / Computer Science Graduate</option>
+                      <option value="Student / Graduate (Any Stream)">Students / Graduates (School / College / Any Stream)</option>
                       <option value="Corporate SOC Team">Corporate Security Operations Team</option>
                     </select>
                   </div>

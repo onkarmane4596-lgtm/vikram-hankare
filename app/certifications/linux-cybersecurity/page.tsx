@@ -471,7 +471,7 @@ export default function LinuxCybersecurityPage() {
                       onChange={(e) => setFormData({ ...formData, applicantCategory: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-[#020617] border border-white/10 text-white focus:outline-none focus:border-[#00d4ff] text-sm transition-all"
                     >
-                      <option value="Cybersecurity Aspirant">Cybersecurity / IT Aspirant</option>
+                      <option value="Students (All Streams)">Students (School / College / Any Stream)</option>
                       <option value="System Administrator">Linux / System Administrator</option>
                       <option value="SOC Analyst / DFIR">SOC Analyst / DFIR Specialist</option>
                       <option value="Penetration Tester">Ethical Hacker / Pen Tester</option>

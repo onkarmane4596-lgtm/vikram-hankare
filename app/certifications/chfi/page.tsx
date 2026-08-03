@@ -527,7 +527,7 @@ export default function CHFICertificationPage() {
                       <option value="Police / Law Enforcement">Police / Cyber Crime Officer</option>
                       <option value="Cybersecurity Analyst">Cybersecurity Analyst / SOC Tier 2</option>
                       <option value="IT Auditor / Legal">IT Auditor / Forensic Consultant</option>
-                      <option value="Student / Graduate">B.Sc. Forensic / Computer Science Graduate</option>
+                      <option value="Student / Graduate (Any Stream)">Students / Graduates (School / College / Any Stream)</option>
                     </select>
                   </div>
                 </div>

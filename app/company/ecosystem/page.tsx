@@ -270,7 +270,7 @@ export default function EcosystemMediaPage() {
                 {/* 16:9 Widescreen Embedded Frame */}
                 <div className="w-full lg:w-3/5 aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-[0_0_30px_rgba(0,85,255,0.2)]">
                   <iframe
-                    src="https://www.youtube.com/embed/ZBoz5SnQ5mg"
+                    src="https://www.youtube.com/embed/hHsC3fKlBZ8"
                     title="Grand Inauguration Ceremony — Skyline Centre of Excellence"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -291,7 +291,7 @@ export default function EcosystemMediaPage() {
                   </p>
                   <div className="flex items-center gap-4">
                     <a
-                      href="https://youtu.be/ZBoz5SnQ5mg"
+                      href="https://youtube.com/shorts/hHsC3fKlBZ8?feature=share"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#0055FF] to-[#38BDF8] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(56,189,248,0.4)] hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]"
@@ -323,15 +323,15 @@ export default function EcosystemMediaPage() {
                   category: "Campus Life"
                 },
                 {
-                  id: "hHsC3fKlBZ8",
-                  url: "https://youtube.com/shorts/hHsC3fKlBZ8?feature=share",
+                  id: "ibAHgq8OM60",
+                  url: "https://youtube.com/shorts/ibAHgq8OM60?feature=share",
                   title: "Skyline Sankalp 100 — Tree Plantation Drive Video",
                   tag: "GREEN INITIATIVE",
                   category: "Environment"
                 },
                 {
-                  id: "ibAHgq8OM60",
-                  url: "https://youtube.com/shorts/ibAHgq8OM60?feature=share",
+                  id: "ZBoz5SnQ5mg",
+                  url: "https://youtu.be/ZBoz5SnQ5mg",
                   title: "High-Tech Cyber Security & Forensics Lab Tour",
                   tag: "LAB INFRASTRUCTURE",
                   category: "Lab Tour"
@@ -545,19 +545,22 @@ export default function EcosystemMediaPage() {
                 title: "Digital Forensics Internship",
                 duration: "3 to 6 Months",
                 desc: "Hands-on exposure to evidence acquisition, hard drive cloning, mobile forensics, and report writing.",
-                badge: "Forensics Track"
+                badge: "Forensics Track",
+                href: "/admissions?course=Digital+Forensics+Internship#apply-form"
               },
               {
                 title: "SOC Analyst Traineeship",
                 duration: "6 Months",
                 desc: "Real-time SIEM log monitoring, incident detection, threat hunting, and firewall configuration labs.",
-                badge: "SOC Operations"
+                badge: "SOC Operations",
+                href: "/admissions?course=SOC+Analyst+Traineeship#apply-form"
               },
               {
                 title: "Ethical Hacking & VAPT Internship",
                 duration: "3 to 6 Months",
                 desc: "Penetration testing, web application security auditing, vulnerability scanning, and remediation guidance.",
-                badge: "Offensive Security"
+                badge: "Offensive Security",
+                href: "/admissions?course=Ethical+Hacking+%26+VAPT+Internship#apply-form"
               }
             ].map((program, idx) => (
               <motion.div
@@ -579,7 +582,7 @@ export default function EcosystemMediaPage() {
                   <p className="text-slate-400 text-sm leading-relaxed mb-6">{program.desc}</p>
                 </div>
                 <Link
-                  href="/placement"
+                  href={program.href}
                   className="inline-flex items-center gap-2 text-xs font-bold text-[#38BDF8] hover:text-white transition-colors"
                 >
                   <span>Learn More & Apply</span>

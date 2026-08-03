@@ -91,10 +91,10 @@ const YOUTUBE_VIDEOS: VideoItem[] = [
   {
     id: "v1",
     title: "Grand Inauguration Ceremony — Skyline Centre of Excellence",
-    youtubeId: "ZBoz5SnQ5mg",
+    youtubeId: "hHsC3fKlBZ8",
     desc: "Official launch highlights featuring speeches and keynotes by law enforcement and founding directors.",
     category: "Launch Feature",
-    isShort: false
+    isShort: true
   },
   {
     id: "v2",
@@ -107,7 +107,7 @@ const YOUTUBE_VIDEOS: VideoItem[] = [
   {
     id: "v3",
     title: "Skyline Sankalp 100 — Tree Plantation Drive",
-    youtubeId: "hHsC3fKlBZ8",
+    youtubeId: "ibAHgq8OM60",
     desc: "Environmental sustainability initiative planting 100 native trees across the campus.",
     category: "Green Initiative",
     isShort: true
@@ -115,10 +115,10 @@ const YOUTUBE_VIDEOS: VideoItem[] = [
   {
     id: "v4",
     title: "High-Tech Infrastructure & Cyber Forensics Lab Tour",
-    youtubeId: "ibAHgq8OM60",
+    youtubeId: "ZBoz5SnQ5mg",
     desc: "A walkthrough of our high-tech 1,500 sq. ft. laboratory infrastructure and cyber ranges.",
     category: "Lab Walkthrough",
-    isShort: true
+    isShort: false
   }
 ];
 

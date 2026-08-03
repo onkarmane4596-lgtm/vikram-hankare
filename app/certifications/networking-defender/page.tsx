@@ -470,7 +470,7 @@ export default function CyberSavvyNetworkingPage() {
                       onChange={(e) => setFormData({ ...formData, applicantCategory: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-[#020617] border border-white/10 text-white focus:outline-none focus:border-[#00d4ff] text-sm transition-all"
                     >
-                      <option value="Cybersecurity Beginner">Cybersecurity Beginner / Student</option>
+                      <option value="Cybersecurity Beginner / Student">Students (School / College / Any Stream)</option>
                       <option value="IT Help Desk / Support">IT Help Desk / Desktop Support</option>
                       <option value="Junior Network Admin">Junior Network / Systems Admin</option>
                       <option value="Engineering Student">Computer Engineering / IT Student</option>

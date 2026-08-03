@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import Particles, { ParticlesProvider } from "@tsparticles/react";

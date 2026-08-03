@@ -525,7 +525,7 @@ export default function ICSSCADASecurityPage() {
                       <option value="Cybersecurity Professional">Cybersecurity Professional / SOC</option>
                       <option value="Control System Engineer">Control Systems / Electrical Engineer</option>
                       <option value="Utilities / Energy Professional">Utilities / Energy / Manufacturing Lead</option>
-                      <option value="Engineering Student">Engineering Graduate (Electrical/CS/IT)</option>
+                      <option value="Students (All Streams)">Students / Graduates (School / College / Any Stream)</option>
                     </select>
                   </div>
                 </div>

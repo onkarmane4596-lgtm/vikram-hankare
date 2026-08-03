@@ -136,7 +136,7 @@ export function getOrganizationSchema() {
     email: 'info@skycyberforensics.in',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Skyline Centre of Excellence Campus',
+      streetAddress: 'I Floor, Rajasi Business Centre, opp BSNL office, Near Powai Naka',
       addressLocality: 'Satara',
       addressRegion: 'Maharashtra',
       postalCode: '415001',
@@ -159,6 +159,7 @@ export function getOrganizationSchema() {
       'https://www.facebook.com/profile.php?id=61590718920061',
       'https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415',
       'https://www.instagram.com/skyline_cyberforensics',
+      'https://youtube.com/@skylinecyberforensics?si=rI7ZCJAG0HxajVrA',
     ],
     priceRange: '₹₹',
     openingHoursSpecification: [

@@ -526,7 +526,7 @@ export default function CEHv13CertificationPage() {
                       <option value="Cybersecurity Analyst">Cybersecurity Analyst / Engineer</option>
                       <option value="IT & Network Admin">IT & Network Administrator</option>
                       <option value="SOC Analyst / Penetration Tester">SOC Analyst / Penetration Tester</option>
-                      <option value="Student / Graduate">Engineering / Computer Science Graduate</option>
+                      <option value="Student / Graduate (Any Stream)">Students / Graduates (School / College / Any Stream)</option>
                       <option value="Corporate Team">Corporate IT / Security Team</option>
                     </select>
                   </div>

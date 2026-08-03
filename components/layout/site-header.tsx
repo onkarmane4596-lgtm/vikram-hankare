@@ -168,14 +168,27 @@ const NAV_LINKS: NavLink[] = [
     icon: Sparkles,
     megaMenu: [
       {
-        title: "Specialized Workshops",
+        title: "Academic & Student Development",
         items: [
-          { name: "Security Awareness Programs", href: "/workshops/security-awareness" },
-          { name: "Research & Development", href: "/workshops/research" },
-          { name: "Capacity Building Programs", href: "/workshops/capacity-building" },
-          { name: "Faculty Development Programs", href: "/workshops/faculty-development" },
-          { name: "AI in Cyber Security", href: "/workshops/ai-cybersecurity" },
-          { name: "Capture The Flag (CTF) Bootcamp", href: "/workshops/ctf-bootcamp" }
+          { name: "Student Development Programs", href: "/workshops/academic-student" },
+          { name: "School Cyber Awareness", href: "/workshops/academic-student" },
+          { name: "College Cyber Awareness Series", href: "/workshops/academic-student" }
+        ]
+      },
+      {
+        title: "Enterprise & Governance",
+        items: [
+          { name: "Corporate Training Programs", href: "/workshops/enterprise-government" },
+          { name: "Banking & Financial Sector", href: "/workshops/enterprise-government" },
+          { name: "Government Capacity Building", href: "/workshops/enterprise-government" },
+          { name: "Executive Leadership Programs", href: "/workshops/enterprise-government" }
+        ]
+      },
+      {
+        title: "Forensics & Law Enforcement",
+        items: [
+          { name: "Law Enforcement & Investigation", href: "/workshops/forensics-law-enforcement" },
+          { name: "Specialized Forensic Science", href: "/workshops/forensics-law-enforcement" }
         ]
       }
     ]
@@ -220,22 +233,22 @@ const NAV_LINKS: NavLink[] = [
   },
   {
     name: "Resources",
-    href: "#",
+    href: "/resources",
     icon: FileText,
     megaMenu: [
       {
         title: "Publications & Research",
         items: [
-          { name: "Research Publications", href: "#" },
-          { name: "Industry Insights", href: "#" }
+          { name: "Research Publications", href: "/company/ecosystem#research" },
+          { name: "Industry Insights", href: "/company/ecosystem#industries" }
         ]
       },
       {
         title: "Learning & Portals",
         items: [
-          { name: "Learning Resources", href: "#" },
-          { name: "Cyber Awareness Portal", href: "#" },
-          { name: "Events & Workshops", href: "#" }
+          { name: "Learning Resources", href: "/resources" },
+          { name: "Cyber Awareness Portal", href: "/workshops/security-awareness" },
+          { name: "Events & Workshops", href: "/workshops" }
         ]
       }
     ]
@@ -322,15 +335,18 @@ export function SiteHeader() {
             <Shield className="w-3 h-3 text-[#38BDF8]" />
             <span>Authorized Training Center</span>
           </div>
-          <div className="flex items-center gap-3 opacity-80">
-            <a href="https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-[#38BDF8] transition-colors">
+          <div className="flex items-center gap-3 opacity-90">
+            <a href="https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-[#0A66C2] transition-colors">
               <Linkedin className="w-3.5 h-3.5 fill-current" />
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61590718920061" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-[#38BDF8] transition-colors">
+            <a href="https://www.facebook.com/profile.php?id=61590718920061" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-[#1877F2] transition-colors">
               <Facebook className="w-3.5 h-3.5 fill-current" />
             </a>
-            <a href="https://www.instagram.com/skyline_cyberforensics" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#38BDF8] transition-colors">
+            <a href="https://www.instagram.com/skyline_cyberforensics" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#E4405F] transition-colors">
               <Instagram className="w-3.5 h-3.5" />
+            </a>
+            <a href="https://youtube.com/@skylinecyberforensics?si=rI7ZCJAG0HxajVrA" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#FF0000] transition-colors">
+              <Youtube className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>

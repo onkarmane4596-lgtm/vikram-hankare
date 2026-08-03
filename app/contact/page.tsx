@@ -6,7 +6,7 @@ import {
   Shield, MapPin, Phone, Mail, Send, Clock, MessageSquare, CheckCircle2,
   Building2, Sparkles, ArrowRight, Headphones, Globe, HelpCircle, Zap,
   ChevronDown, ExternalLink, Lock, AlertTriangle, User, FileText, Check,
-  Instagram, Facebook, Linkedin
+  Instagram, Facebook, Linkedin, Youtube
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -235,7 +235,8 @@ function ContactFormContent() {
                     SKYLINE Centre of Excellence
                   </p>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Satara, Maharashtra, India<br />
+                    I Floor, Rajasi Business Centre, opp BSNL office,<br />
+                    Near Powai Naka Satara - 415001<br />
                     <span className="text-slate-500">Under Chhatrapati Shahu Maharaj Sevabhavi Sanstha</span>
                   </p>
                   <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center gap-2 text-xs font-semibold text-[#38BDF8]">
@@ -354,6 +355,18 @@ function ContactFormContent() {
                         <span className="font-semibold">LinkedIn Profile</span>
                       </div>
                       <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                    </a>
+                    <a
+                      href="https://youtube.com/@skylinecyberforensics?si=rI7ZCJAG0HxajVrA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-[#38BDF8]/40 transition-all flex items-center justify-between text-xs text-slate-300 hover:text-white"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Youtube className="w-4 h-4 text-red-500" />
+                        <span className="font-semibold">YouTube Channel</span>
+                      </div>
+                      <span className="font-mono text-[11px] text-slate-400">@skylinecyberforensics</span>
                     </a>
                   </div>
                 </div>
@@ -580,7 +593,7 @@ function ContactFormContent() {
                 <span>Satara Headquarters</span>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Chhatrapati Shahu Maharaj Sevabhavi Sanstha Campus, Satara, MH.
+                I Floor, Rajasi Business Centre, opp BSNL office, Near Powai Naka Satara - 415001
               </p>
             </div>
           </div>

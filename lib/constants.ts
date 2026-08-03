@@ -4,11 +4,12 @@ export const CONTACT_INFO = {
   email: 'info@skycyberforensics.in',
   whatsapp: '919890424040',
   whatsappMessage: "Hi, I'm interested in your cybersecurity courses and forensic consultancy services. Can you provide more information?",
-  address: 'Satara, Maharashtra, India (Under Chhatrapati Shahu Maharaj Sevabhavi Sanstha)',
+  address: 'I Floor, Rajasi Business Centre, opp BSNL office, Near Powai Naka Satara, - 415001',
   social: {
     instagram: 'https://www.instagram.com/skyline_cyberforensics',
     facebook: 'https://www.facebook.com/profile.php?id=61590718920061',
     linkedin: 'https://www.linkedin.com/in/skyline-centre-of-excellence-in-cybersecurity-and-forensics-725507415',
+    youtube: 'https://youtube.com/@skylinecyberforensics?si=rI7ZCJAG0HxajVrA',
   }
 }
 
